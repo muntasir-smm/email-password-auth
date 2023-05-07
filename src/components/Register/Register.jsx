@@ -19,10 +19,11 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="w-75 mx-auto">
       <h2>Please Register</h2>
       <form onSubmit={handelSubmit}>
         <input
+          className="mb-4 rounded ps-2"
           onChange={handelEmailChange}
           type="email"
           name="email"
@@ -31,6 +32,7 @@ const Register = () => {
         />
         <br />
         <input
+          className=" mb-4 rounded ps-2"
           onBlur={handelPasswordBlur}
           type="password"
           name="password"
@@ -38,7 +40,7 @@ const Register = () => {
           placeholder="Your Password"
         />
         <br />
-        <input type="submit" value="Register" />
+        <input className="btn btn-success" type="submit" value="Register" />
       </form>
     </div>
   );
