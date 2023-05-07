@@ -1,5 +1,5 @@
 import React from "react";
-
+// Sign Up
 const Register = () => {
   return (
     <div>
