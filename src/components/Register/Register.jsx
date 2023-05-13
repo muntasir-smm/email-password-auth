@@ -6,21 +6,40 @@ const auth = getAuth(app);
 // Sign Up
 const Register = () => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handelSubmit = (event) => {
+    // 1. Prevent page referesh
+
     event.preventDefault();
+    setSuccess("");
+    setError("");
+
+    // 2. Collect form data
+
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
+
+    // Validate
+    if (!/(?=.*[A-Z])/.test(password)) {
+      setError("Please atleast one uppercase");
+      return;
+    }
 
     //   Create user in firebase
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        setError("");
+        event.target.reset();
+        setSuccess("User has created successfully");
       })
       .catch((error) => {
-        console.log("ERROR:", error);
+        console.log("ERROR:", error.message);
+        setError(error.message);
       });
   };
 
@@ -39,24 +58,28 @@ const Register = () => {
       <form onSubmit={handelSubmit}>
         <input
           className="mb-4 rounded ps-2"
-          onChange={handelEmailChange}
+          onSubmit={handelEmailChange}
           type="email"
           name="email"
           id="email"
           placeholder="Your Email"
+          required
         />
         <br />
         <input
           className=" mb-4 rounded ps-2"
-          onBlur={handelPasswordBlur}
+          onSubmit={handelPasswordBlur}
           type="password"
           name="password"
           id="password"
           placeholder="Your Password"
+          required
         />
         <br />
         <input className="btn btn-success" type="submit" value="Register" />
       </form>
+      <p className="text-danger">{error}</p>
+      <p className="text-success">{success}</p>
     </div>
   );
 };
